@@ -29,7 +29,6 @@ function jfrog_upload {
     pkg_rel=`echo ${rev_filename} | cut -d '.' -f3 | rev`
     releasever="${pkg_rel:2}"
 
-
     jfrog bt package-create --licenses "${BINTRAY_LICENSE}" --vcs-url "${BINTRAY_VCS_URL}" "${BINTRAY_REPO}/${pkg_name}" || true
     jfrog bt upload --publish=true "${pkg_filename}" "${BINTRAY_REPO}/${pkg_name}/${pkg_version}" "${pkg_dist}/${releasever}/${pkg_arch}/"
 
@@ -55,7 +54,7 @@ do
     IFS=_ read -r distro release <<< "$(basename "${path}")"
     while IFS= read -r -d '' rpm
     do
-        jfrog_upload "${release}" "${rpm}"
+	jfrog_upload "${distro}_${release}" "$(basename "${rpm}")"
     done <    <(find "${path}" -maxdepth 1 -type f -print0)
 done <   <(find "${PACKAGE_LOCATION}" -mindepth 1 -maxdepth 1 -type d -print0)
 
