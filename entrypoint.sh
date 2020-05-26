@@ -33,7 +33,6 @@ function jfrog_upload {
     jfrog bt package-create --licenses "${BINTRAY_LICENSE}" --vcs-url "${BINTRAY_VCS_URL}" "${BINTRAY_REPO}/${pkg_name}" || true
     jfrog bt upload --publish=true "${pkg_filename}" "${BINTRAY_REPO}/${pkg_name}/${pkg_version}" "${pkg_dist}/${releasever}/${pkg_arch}/"
 
-fi
 }
 
 curl --silent -fL -XGET \
